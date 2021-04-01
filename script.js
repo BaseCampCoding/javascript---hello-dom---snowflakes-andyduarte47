@@ -7,22 +7,31 @@ const snowflakesContainer = document.getElementById("snowflakes-container");
 const snowVsRain = document.getElementById("snow-vs-rain")
 const colorClicker = document.getElementById("click-color")
 const quantity = document.getElementById("quantity")
+const wind = document.getElementById("wind")
 let quantityAmount = 50
-setInterval(() => createSnowflake(), quantityAmount);
-switch(quantity){
-  case 0:
-    quantityAmount = 200
-  break;
-  case 1:
-    quantityAmount = 150
-  break;
-  case 2:
-    quantityAmount = 100
-  break;
-  case 3:
-    quantityAmount = 50
-  break;
-}
+let snow = setInterval(() => createSnowflake(), quantityAmount);
+quantity.addEventListener("input", () =>{
+  switch(quantity.value){
+    case "0":
+      quantityAmount = 600
+    break;
+    case "1":
+      quantityAmount = 400
+    break;
+    case "2":
+      quantityAmount = 200
+    break;
+    case "3":
+      quantityAmount = 100
+    break;
+    case "4":
+      quantityAmount = 0
+    break;
+  }
+clearInterval(snow)
+snow = setInterval(() => createSnowflake(), quantityAmount);
+})
+
 
 
 function randint(lo, hi) {
@@ -50,7 +59,7 @@ function createSnowflake() {
 
   snowFlake
     .animate(
-      { transform: `translate(0vw, 100vh)` },
+      { transform: `translate(${wind.value}vw, 100vh)` },
       { duration: randint(MIN_DURATION, MAX_DURATION) }
     )
     .finished.then(() => snowFlake.remove());
